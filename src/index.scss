@@ -1,0 +1,26 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  line-height: 1.3;
+  font-weight: 600;
+  color: #454b52;
+  background: #f7f5f3;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+}

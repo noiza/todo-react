@@ -1,7 +1,12 @@
-import "./App.css";
+import "./App.scss";
+import Tasks from "./Tasks";
 
 function App() {
-  return <div className="App"></div>;
+  return (
+    <div className="todo-app">
+      <Tasks />
+    </div>
+  );
 }
 
 export default App;
