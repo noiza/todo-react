@@ -58,6 +58,15 @@ const Tasks = () => {
       });
   };
 
+  const deleteTask = (id) => {
+    if (window.confirm("Are you sure?")) {
+      setTasks(tasks.filter((task) => task.id !== id));
+      axios.delete("http://localhost:3001/tasks/" + id).catch(() => {
+        alert("Error while deleting the task.");
+      });
+    }
+  };
+
   return (
     <>
       <div className="header">
@@ -89,7 +98,7 @@ const Tasks = () => {
                 <button onClick={() => editTask(task.id, task.title)}>
                   <img src={editIcon} alt="edit icon" />
                 </button>
-                <button>
+                <button onClick={() => deleteTask(task.id)}>
                   <img src={deleteIcon} alt="delete icon" />
                 </button>
               </div>

@@ -6,11 +6,6 @@
       "completed": true
     },
     {
-      "id": 2,
-      "title": "Edit",
-      "completed": true
-    },
-    {
       "id": 367,
       "title": "New task",
       "completed": false
