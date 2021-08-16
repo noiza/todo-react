@@ -25,6 +25,24 @@ const Tasks = () => {
     }
   };
 
+  const editTask = (id, title) => {
+    const newTitle = window.prompt("Edit Task:", title);
+    if (newTitle) {
+      setTasks(
+        tasks.map((task) =>
+          task.id === id ? { ...task, title: newTitle } : task
+        )
+      );
+      axios
+        .patch("http://localhost:3001/tasks/" + id, {
+          title: newTitle,
+        })
+        .catch(() => {
+          alert("Error while editing the task.");
+        });
+    }
+  };
+
   return (
     <>
       <div className="header">
@@ -48,7 +66,7 @@ const Tasks = () => {
               </p>
 
               <div className="actions">
-                <button>
+                <button onClick={() => editTask(task.id, task.title)}>
                   <img src={editIcon} alt="edit icon" />
                 </button>
                 <button>
