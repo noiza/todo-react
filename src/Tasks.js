@@ -43,6 +43,21 @@ const Tasks = () => {
     }
   };
 
+  const completeTask = (id, status) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      )
+    );
+    axios
+      .patch("http://localhost:3001/tasks/" + id, {
+        completed: status,
+      })
+      .catch(() => {
+        alert("Error while completing the task.");
+      });
+  };
+
   return (
     <>
       <div className="header">
@@ -55,7 +70,12 @@ const Tasks = () => {
           tasks.map((task) => (
             <div className="task" key={task.id}>
               <div className="checkbox">
-                <input type="checkbox" id={`task-${task.id}`} />
+                <input
+                  type="checkbox"
+                  id={`task-${task.id}`}
+                  checked={task.completed}
+                  onChange={(e) => completeTask(task.id, e.target.checked)}
+                />
                 <label htmlFor={`task-${task.id}`}>
                   <img src={checkIcon} alt="check icon" />
                 </label>
