@@ -2,12 +2,17 @@
   "tasks": [
     {
       "id": 1,
-      "title": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur tempore provident velit placeat ut rem error test test text more",
+      "title": "Pay rent",
       "completed": true
     },
     {
       "id": 367,
-      "title": "New task",
+      "title": "Call Monica",
+      "completed": false
+    },
+    {
+      "id": 634,
+      "title": "Buy milk",
       "completed": false
     }
   ]
