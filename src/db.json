@@ -9,6 +9,11 @@
       "id": 2,
       "title": "test",
       "completed": false
+    },
+    {
+      "id": 367,
+      "title": "New task",
+      "completed": false
     }
   ]
 }

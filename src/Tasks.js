@@ -13,11 +13,23 @@ const Tasks = () => {
     });
   }, []);
 
+  const addTask = () => {
+    const title = window.prompt("New Task:");
+    if (title) {
+      const id = Math.floor(Math.random() * 1000) + 1;
+      const newTask = { id, title, completed: false };
+      setTasks([...tasks, newTask]);
+      axios.post("http://localhost:3001/tasks/", newTask).catch(() => {
+        alert("Error while adding the task.");
+      });
+    }
+  };
+
   return (
     <>
       <div className="header">
         <h2>to do:</h2>
-        <button>+</button>
+        <button onClick={() => addTask()}>+</button>
       </div>
 
       <div className="tasks">
