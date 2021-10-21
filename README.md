@@ -1,6 +1,6 @@
 # todo-react
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A simple todo app created with React.js
 
 ![image](https://user-images.githubusercontent.com/8477397/138246213-8c4880e0-3a4b-4225-b20a-555ecf4e44a5.png)
 
