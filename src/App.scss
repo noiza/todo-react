@@ -14,34 +14,77 @@
 }
 
 .header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 0.7rem;
   border-bottom: 1px solid rgba(52, 62, 76, 0.11);
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.5rem;
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.5rem;
+    position: relative;
+  }
 
   h2 {
     color: #22d105;
-    padding-left: 3rem;
+    padding-left: 0.5rem;
     font-size: 1.8rem;
 
     @media screen and (max-width: 780px) {
-      padding-left: 0.8rem;
+
     }
   }
 
-  button {
-    font-size: 1.6rem;
-    color: #22d105;
-    width: 34px;
-    height: 34px;
+  h3 {
+    padding: 1.3rem 0.5rem 0.5rem;
+  }
+
+  .popper-btn {
+    display: flex;
+    color: #454b52;
+    padding: 0.2rem;
     background-color: rgba(9, 30, 66, 0.05);
     border-radius: 3px;
 
     &:hover {
       background-color: rgba(52, 62, 76, 0.11);
     }
+  }
+
+  .popper {
+    position: absolute;
+    top: 34px;
+    right: 0;
+    background: #fff;
+    z-index: 50;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+  }
+
+  .popper-top {
+    border-bottom: 1px solid rgba(52, 62, 76, 0.11);
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    text-align: center;
+    position: relative;
+
+    button {
+      position: absolute;
+      top: 6px;
+      right: 4px;
+      padding: 0.35rem;
+    }
+  }
+
+  .popper-section {
+    padding: 0.5rem 0.3rem;
+  }
+
+  .new-task {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 0.6rem;
   }
 }
 
