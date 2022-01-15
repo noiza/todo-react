@@ -1,8 +1,6 @@
-import checkIcon from "./check.svg";
-import editIcon from "./edit.svg";
-import deleteIcon from "./delete.svg";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Task from "./Task";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState(null);
@@ -164,32 +162,13 @@ const Tasks = () => {
       <div className="tasks">
         {tasks && tasks.length > 0 ? (
           tasks.map((task) => (
-            <div className="task" key={task.id}>
-              <div className="checkbox">
-                <input
-                  type="checkbox"
-                  id={`task-${task.id}`}
-                  checked={task.completed}
-                  onChange={(e) => completeTask(task.id, e.target.checked)}
-                />
-                <label htmlFor={`task-${task.id}`}>
-                  <img src={checkIcon} alt="check icon" />
-                </label>
-              </div>
-
-              <p className={task.completed ? "title completed" : "title"}>
-                {task.title}
-              </p>
-
-              <div className="actions">
-                <button onClick={() => editTask(task.id, task.title)}>
-                  <img src={editIcon} alt="edit icon" />
-                </button>
-                <button onClick={() => deleteTask(task.id)}>
-                  <img src={deleteIcon} alt="delete icon" />
-                </button>
-              </div>
-            </div>
+            <Task 
+              task={task} 
+              key={task.id}
+              onComplete={completeTask}
+              onEdit={editTask}
+              onDelete={deleteTask}
+            />
           ))
         ) : (
           <div className="no-tasks">
