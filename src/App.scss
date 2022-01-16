@@ -79,25 +79,25 @@
   .popper-section {
     padding: 0.5rem 0.3rem;
   }
+}
 
-  .new-task {
-    width: 100%;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 0.6rem 0.8rem;
-    font-size: 1rem;
-    font-family: "Nunito", sans-serif;
+.edit-input {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0.6rem 0.8rem;
+  font-size: 1rem;
+  font-family: "Nunito", sans-serif;
 
-    &:hover {
-      border-color: #333d4b4f;
-    }
+  &:hover {
+    border-color: #333d4b4f;
+  }
 
-    &:enabled:focus {
-      outline: 0 none;
-      outline-offset: 0;
-      box-shadow: 0 0 0 0.03rem #22d105;
-      border-color: #22d105;
-    }
+  &:enabled:focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: 0 0 0 0.03rem #22d105;
+    border-color: #22d105;
   }
 }
 
@@ -157,10 +157,11 @@
 }
 
 .actions {
-  display: inline-flex;
-  opacity: 0;
+  // display: inline-flex;
+  display: flex;
+  justify-content: space-between;
 
-  button {
+  .button-icon {
     opacity: 0.3;
     margin-left: 0.3rem;
     width: 24px;
@@ -181,9 +182,7 @@
 
   @media screen and (max-width: 780px) {
     & {
-      opacity: 1;
-
-      button {
+      .button-icon {
         opacity: 0.5;
         background-color: rgba(52, 62, 76, 0.11);
       }
@@ -194,4 +193,35 @@
 .completed {
   text-decoration: line-through;
   color: #d6d6d6;
+}
+
+
+.task-edit-form {
+  width: 100%;
+  margin-bottom: 0.5rem;
+
+  .edit-input {
+    padding: 0.4rem 0.7rem;
+    font-size: 0.98rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .button-text {
+    border: 1px solid transparent;
+    border-radius: 3px;
+    width: auto;
+    height: auto;
+    padding: 0.45rem 0.6rem;
+  }
+
+  .task-edit-button-save {
+    background: #22d105;
+    color: #fff;
+    margin-right: 0.4rem;
+  }
+
+  .task-edit-button-cancel {
+    background: #fff;
+    border-color: #ddd;
+  }
 }

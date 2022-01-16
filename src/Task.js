@@ -1,10 +1,56 @@
 import checkIcon from "./check.svg";
-import editIcon from "./edit.svg";
 import deleteIcon from "./delete.svg";
+import { useState } from "react";
 
 const Task = ({task, onComplete, onEdit, onDelete}) => {
-  return (
-    <div className="task">
+  const [isEditing, setIsEditing] = useState(false);
+  const [newTitle, setNewTitle] = useState(task.title);
+
+  const handleChange = (e) => {
+    setNewTitle(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (newTitle) {
+      onEdit(task.id, newTitle);
+      setIsEditing(false);
+    }
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    if (newTitle !== task.title) {
+      setNewTitle(task.title);
+    }
+  };
+
+  const editingTemplate = (
+    <form className="task-edit-form" onSubmit={handleSubmit}>
+      <input
+        className="edit-input"
+        type="text"
+        value={newTitle}
+        onChange={handleChange}
+      />
+      
+      <div className="actions">
+        <div>
+          <button className="button-text task-edit-button-save" type="submit">Save</button>
+          <button className="button-text task-edit-button-cancel" onClick={handleCancel}>Cancel</button>
+        </div>
+
+        <div>
+          <button className="button-icon" onClick={() => onDelete(task.id)}>
+            <img src={deleteIcon} alt="delete icon" />
+          </button>
+        </div>
+      </div>
+    </form>
+  );
+
+  const viewTemplate = (
+    <>
       <div className="checkbox">
         <input
           type="checkbox"
@@ -17,18 +63,18 @@ const Task = ({task, onComplete, onEdit, onDelete}) => {
         </label>
       </div>
 
-      <p className={task.completed ? "title completed" : "title"}>
+      <p
+        className={task.completed ? "title completed" : "title"}
+        onClick={() => setIsEditing(true)}
+      >
         {task.title}
       </p>
+    </>
+  );
 
-      <div className="actions">
-        <button onClick={() => onEdit(task.id, task.title)}>
-          <img src={editIcon} alt="edit icon" />
-        </button>
-        <button onClick={() => onDelete(task.id)}>
-          <img src={deleteIcon} alt="delete icon" />
-        </button>
-      </div>
+  return (
+    <div className="task">
+      {isEditing ? editingTemplate : viewTemplate}
     </div>
   );
 };

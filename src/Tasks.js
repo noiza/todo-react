@@ -53,22 +53,20 @@ const Tasks = () => {
     }
   };
 
-  const editTask = (id, title) => {
-    const newTitle = window.prompt("Edit Task:", title);
-    if (newTitle) {
-      setTasks(
-        tasks.map((task) =>
-          task.id === id ? { ...task, title: newTitle } : task
-        )
-      );
-      axios
-        .patch("http://localhost:3001/tasks/" + id, {
-          title: newTitle,
-        })
-        .catch(() => {
-          alert("Error while editing the task.");
-        });
-    }
+  const editTask = (id, newTitle) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, title: newTitle } : task
+      )
+    );
+
+    axios
+      .patch("http://localhost:3001/tasks/" + id, {
+        title: newTitle,
+      })
+      .catch(() => {
+        alert("Error while editing the task.");
+      });
   };
 
   const completeTask = (id, status) => {
@@ -148,7 +146,7 @@ const Tasks = () => {
         </div>
 
         <input 
-          className="new-task"
+          className="edit-input"
           type="text"
           placeholder="Add a task..."
           value={newTaskTitle}
