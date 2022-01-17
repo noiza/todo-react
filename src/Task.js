@@ -1,8 +1,8 @@
 import checkIcon from "./check.svg";
-import deleteIcon from "./delete.svg";
+import archiveIcon from "./archive.svg";
 import { useState } from "react";
 
-const Task = ({task, onComplete, onEdit, onDelete}) => {
+const Task = ({task, onComplete, onEdit, onArchive}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState(task.title);
 
@@ -34,17 +34,9 @@ const Task = ({task, onComplete, onEdit, onDelete}) => {
         onChange={handleChange}
       />
       
-      <div className="actions">
-        <div>
-          <button className="button-text task-edit-button-save" type="submit">Save</button>
-          <button className="button-text task-edit-button-cancel" onClick={handleCancel}>Cancel</button>
-        </div>
-
-        <div>
-          <button className="button-icon" onClick={() => onDelete(task.id)}>
-            <img src={deleteIcon} alt="delete icon" />
-          </button>
-        </div>
+      <div className="task-edit-actions">
+        <button className="button-text task-edit-button-save" type="submit">Save</button>
+        <button className="button-text task-edit-button-cancel" onClick={handleCancel}>Cancel</button>
       </div>
     </form>
   );
@@ -69,6 +61,12 @@ const Task = ({task, onComplete, onEdit, onDelete}) => {
       >
         {task.title}
       </p>
+
+      <div className="actions">
+        <button className="button-icon" onClick={() => onArchive(task.id)}>
+          <img src={archiveIcon} alt="archive icon" />
+        </button>
+      </div>
     </>
   );
 

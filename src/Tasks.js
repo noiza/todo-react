@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Task from "./Task";
+import ArchivedTask from "./ArchivedTask";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState(null);
+  const [showArchivedTasks, setShowArchivedTasks] = useState(true);
   const [showCompletedTasks, setShowCompletedTasks] = useState(false); // todo: to store a showCompletedTasks value on the server
   const [showTodayTasks, setShowTodayTasks] = useState(false); // todo: to store a showTodayTasks value on the server
-  const [taskQuantity, setTaskQuantity] = useState(0);
   const [popperIsOpen, setPopperIsOpen] = useState(false);
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
@@ -21,18 +22,7 @@ const Tasks = () => {
 
   useEffect(() => {
     axios.get("http://localhost:3001/tasks/").then(({ data }) => {
-      let tempTasks = data; // or // = [...data];
-
-      if (!showCompletedTasks) {
-        tempTasks = tempTasks.filter(task => task.completed === false);
-      };
-
-      if (showTodayTasks) {
-        tempTasks = tempTasks.filter(task => task.date === todayDate);
-      };
-
-      setTasks(tempTasks);
-      setTaskQuantity(tempTasks.length);
+      setTasks(data);
     });
   }, [showCompletedTasks, showTodayTasks]);
 
@@ -75,11 +65,6 @@ const Tasks = () => {
         task.id === id ? { ...task, completed: !task.completed } : task
       )
     );
-    if (!showCompletedTasks) {
-      let uncompletedTasks = tasks.filter(task => task.id !== id);
-      setTasks(uncompletedTasks);
-      setTaskQuantity(uncompletedTasks.length);
-    };
     axios
       .patch("http://localhost:3001/tasks/" + id, {
         completed: status,
@@ -97,6 +82,34 @@ const Tasks = () => {
       });
     }
   };
+
+  const archiveTask = (id) => {
+    setTasks(tasks.map(task => task.id !== id ? task : {...task, archive: true}));
+    axios
+      .patch("http://localhost:3001/tasks/" + id, {
+        archive: true,
+      })
+      .catch(() => {
+        alert("Error while archiving the task.");
+      });
+  };
+
+  const unarchiveTask = (id) => {
+    setTasks(tasks.map(task => task.id !== id ? task : {...task, archive: false}));
+    axios
+      .patch("http://localhost:3001/tasks/" + id, {
+        archive: false,
+      })
+      .catch(() => {
+        alert("Error while archiving the task.");
+      });
+  };
+
+  var archivedTasks = tasks && tasks.filter(x => x.archive);
+  var activeTasks = tasks && tasks
+    .filter(x => !x.archive)
+    .filter(x => showCompletedTasks || !x.completed)
+    .filter(x => !showTodayTasks || x.date === todayDate);
 
   return (
     <>
@@ -139,6 +152,16 @@ const Tasks = () => {
                   />
                   <label htmlFor="showCompletedTasks">Show completed tasks</label>
                 </div>
+
+                <div className="popper-section">
+                  <input 
+                    type="checkbox"
+                    id="showArchivedTasks"
+                    checked={showArchivedTasks}
+                    onChange={(e) => setShowArchivedTasks(e.target.checked)}
+                  />
+                  <label htmlFor="showArchivedTasks">Show archived tasks</label>
+                </div>
               </div>
             }
 
@@ -154,18 +177,19 @@ const Tasks = () => {
           onKeyDown={onKeyDownHandler}
         />
 
-        <h3>{showTodayTasks ? "Today" : "All"} ({taskQuantity}):</h3>
+        <h3>{showTodayTasks ? "Today" : "All"} ({activeTasks && activeTasks.length || 0}):</h3>
       </div>
 
       <div className="tasks">
-        {tasks && tasks.length > 0 ? (
-          tasks.map((task) => (
+        {activeTasks && activeTasks.length > 0 ? (
+          activeTasks.map((task) => (
             <Task 
               task={task} 
               key={task.id}
               onComplete={completeTask}
               onEdit={editTask}
               onDelete={deleteTask}
+              onArchive={archiveTask}
             />
           ))
         ) : (
@@ -174,6 +198,35 @@ const Tasks = () => {
           </div>
         )}
       </div>
+
+      {showArchivedTasks &&
+        <div>
+          <div className="header">
+            <h3>Archived ({archivedTasks && archivedTasks.length || 0}):</h3>
+          </div>
+          
+          <div className="tasks">
+            {archivedTasks && archivedTasks.length ? (
+              archivedTasks
+                .map((task) => (
+                <ArchivedTask 
+                  task={task} 
+                  key={task.id}
+                  onComplete={completeTask}
+                  onDelete={deleteTask}
+                  onUnarchive={unarchiveTask}
+                />
+              ))
+            ) : (
+              <div className="no-tasks">
+                <h3>No archived tasks</h3>
+              </div>
+            )}
+          </div>
+        </div>
+      }
+
+      
     </>
   );
 };

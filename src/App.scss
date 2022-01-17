@@ -157,9 +157,8 @@
 }
 
 .actions {
-  // display: inline-flex;
-  display: flex;
-  justify-content: space-between;
+  display: inline-flex;
+  opacity: 0;
 
   .button-icon {
     opacity: 0.3;
@@ -182,6 +181,8 @@
 
   @media screen and (max-width: 780px) {
     & {
+      opacity: 1;
+      
       .button-icon {
         opacity: 0.5;
         background-color: rgba(52, 62, 76, 0.11);
@@ -212,6 +213,11 @@
     width: auto;
     height: auto;
     padding: 0.45rem 0.6rem;
+  }
+
+  .task-edit-actions {
+    display: flex;
+    // justify-content: space-between;
   }
 
   .task-edit-button-save {

@@ -4,31 +4,36 @@
       "id": 1,
       "title": "Pay rent",
       "date": "01/01/2022",
-      "completed": true
+      "completed": true,
+      "archive": false
     },
     {
       "id": 367,
       "title": "Call Monica",
       "date": "01/01/2022",
-      "completed": false
+      "completed": false,
+      "archive": false
     },
     {
       "id": 634,
       "title": "Buy milk",
       "date": "01/03/2022",
-      "completed": false
+      "completed": false,
+      "archive": false
     },
     {
       "id": 549,
       "title": "Finish homework",
       "date": "01/03/2022",
-      "completed": true
+      "completed": true,
+      "archive": false
     },
     {
       "id": 501,
       "title": "test",
       "date": "01/03/2022",
-      "completed": false
+      "completed": false,
+      "archive": true
     }
   ]
 }
