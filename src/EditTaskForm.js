@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const EditTaskForm = ({task, onEdit, setIsEditFormOpen}) => {
   const [newTitle, setNewTitle] = useState(task.title);
+  const inputRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -11,6 +12,10 @@ const EditTaskForm = ({task, onEdit, setIsEditFormOpen}) => {
     }
   };
 
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
   return(
     <div className="task bg-edit">
       <form className="task-edit-form" onSubmit={handleSubmit}>
@@ -19,6 +24,8 @@ const EditTaskForm = ({task, onEdit, setIsEditFormOpen}) => {
           type="text"
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
+          ref={inputRef}
+          onFocus={(e) => e.target.select()}
         />
         
         <div className="task-edit-actions">
