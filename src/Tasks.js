@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Task from "./Task";
 import ArchivedTask from "./ArchivedTask";
+import EditTaskForm from "./EditTaskForm";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState(null);
@@ -10,6 +11,9 @@ const Tasks = () => {
   const [showTodayTasks, setShowTodayTasks] = useState(false); // todo: to store a showTodayTasks value on the server
   const [popperIsOpen, setPopperIsOpen] = useState(false);
   const [newTaskTitle, setNewTaskTitle] = useState('');
+
+  const [editTaskId, setEditTaskId] = useState(null);
+  const [isEditFormOpen, setIsEditFormOpen] = useState(false);
 
   const getTodayDate = () => {
     let today = new Date();
@@ -57,6 +61,13 @@ const Tasks = () => {
       .catch(() => {
         alert("Error while editing the task.");
       });
+  };
+
+  const openEditForm = (id) => {
+    if (id) {
+      setEditTaskId(id);
+      setIsEditFormOpen(true);
+    }
   };
 
   const completeTask = (id, status) => {
@@ -183,14 +194,23 @@ const Tasks = () => {
       <div className="tasks">
         {activeTasks && activeTasks.length > 0 ? (
           activeTasks.map((task) => (
-            <Task 
-              task={task} 
-              key={task.id}
-              onComplete={completeTask}
-              onEdit={editTask}
-              onDelete={deleteTask}
-              onArchive={archiveTask}
-            />
+            <div key={task.id}>
+              {isEditFormOpen && task.id === editTaskId ?
+                <EditTaskForm
+                  task={task}
+                  onEdit={editTask}
+                  setIsEditFormOpen={setIsEditFormOpen}
+                />
+                  :
+                <Task
+                  task={task}
+                  onComplete={completeTask}
+                  onOpenEditForm={openEditForm}
+                  onDelete={deleteTask}
+                  onArchive={archiveTask}
+                />
+              }
+            </div>
           ))
         ) : (
           <div className="no-tasks">
