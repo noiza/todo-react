@@ -4,7 +4,7 @@ import archiveIcon from "./archive.svg";
 const Task = ({task, onComplete, onOpenEditForm, onArchive}) => {
 
   return (
-    <div className="task cursor-pointer" onClick={() => onOpenEditForm(task.id)}>
+    <div className="task cursor-pointer">
       <div className="checkbox">
         <input
           type="checkbox"
@@ -19,6 +19,7 @@ const Task = ({task, onComplete, onOpenEditForm, onArchive}) => {
 
       <p
         className={task.completed ? "title completed" : "title"}
+        onClick={() => onOpenEditForm(task.id)}
       >
         {task.title}
       </p>

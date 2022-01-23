@@ -111,12 +111,16 @@
   display: flex;
   align-items: flex-start;
   border-radius: 3px;
-  padding: 0.5rem;
+
+  .checkbox {
+    padding: 0.5rem 0 0.5rem 0.5rem;
+  }
 
   .title {
     margin-left: 1rem;
     flex: 1;
     align-self: center;
+    padding: 0.5rem 0;
   }
 
   &:hover {
@@ -159,6 +163,7 @@
 .actions {
   display: inline-flex;
   opacity: 0;
+  padding: 0.5rem 0.5rem 0.5rem 0;
 
   .button-icon {
     opacity: 0.3;
@@ -199,7 +204,8 @@
 
 .task-edit-form {
   width: 100%;
-  margin-bottom: 0.5rem;
+  margin: 0.3rem 0.2rem 0.5rem 0.2rem;
+  padding: 0.5rem;
 
   .edit-input {
     padding: 0.4rem 0.7rem;
@@ -234,7 +240,7 @@
 
 .bg-edit {
   background: rgba(9, 30, 66, 0.04);
-  border: 1px solid #ddd;
+  border: 1px dashed #ddd;
 }
 
 .cursor-pointer {
