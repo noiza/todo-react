@@ -122,6 +122,16 @@ const Tasks = () => {
     .filter(x => showCompletedTasks || !x.completed)
     .filter(x => !showTodayTasks || x.date === todayDate);
 
+  activeTasks && activeTasks.sort((x, y) => {
+    if (x.completed === y.completed) {
+      return 0;
+    }
+    if (x.completed) {
+      return 1;
+    }
+    return -1;
+  });
+
   return (
     <>
       <div className="header">
