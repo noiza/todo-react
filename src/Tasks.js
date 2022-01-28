@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Task from "./Task";
 import ArchivedTask from "./ArchivedTask";
 import EditTaskForm from "./EditTaskForm";
@@ -201,33 +202,48 @@ const Tasks = () => {
         <h3>{showTodayTasks ? "Today" : "All"} ({activeTasks && activeTasks.length || 0}):</h3>
       </div>
 
-      <div className="tasks">
-        {activeTasks && activeTasks.length > 0 ? (
-          activeTasks.map((task) => (
-            <div key={task.id}>
-              {isEditFormOpen && task.id === editTaskId ?
-                <EditTaskForm
-                  task={task}
-                  onEdit={editTask}
-                  setIsEditFormOpen={setIsEditFormOpen}
-                />
-                  :
-                <Task
-                  task={task}
-                  onComplete={completeTask}
-                  onOpenEditForm={openEditForm}
-                  onDelete={deleteTask}
-                  onArchive={archiveTask}
-                />
-              }
+      <DragDropContext>
+        <Droppable droppableId="tasks">
+          {(provided) => (
+            <div className="tasks task-list" {...provided.droppableProps} ref={provided.innerRef}>
+              {activeTasks && activeTasks.length > 0 ? (
+                activeTasks.map((task, index) => (
+                  <Draggable key={task.id} draggableId={task.title} index={index}>
+                    {(provided) => (
+                      <div 
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                      >
+                        {isEditFormOpen && task.id === editTaskId ?
+                          <EditTaskForm
+                            task={task}
+                            onEdit={editTask}
+                            setIsEditFormOpen={setIsEditFormOpen}
+                          />
+                            :
+                          <Task
+                            task={task}
+                            onComplete={completeTask}
+                            onOpenEditForm={openEditForm}
+                            onDelete={deleteTask}
+                            onArchive={archiveTask}
+                          />
+                        }
+                      </div>
+                    )}
+                  </Draggable>
+                ))
+              ) : (
+                <div className="no-tasks">
+                  <h3>No tasks found</h3>
+                </div>
+              )}
+              {provided.placeholder}
             </div>
-          ))
-        ) : (
-          <div className="no-tasks">
-            <h3>No tasks found</h3>
-          </div>
-        )}
-      </div>
+          )}
+        </Droppable>
+      </DragDropContext>
 
       {showArchivedTasks &&
         <div>
